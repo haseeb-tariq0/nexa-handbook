@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEXA Ops Handbook — Sign in</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Chakra+Petch:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --nexa-purple: #9354ff;
+      --purple-wave: #683eb5;
+      --luminous-purple: #ae7fff;
+      --techno-purple: #c9aaff;
+      --night-purple: #3e296b;
+      --dark-purple: #131321;
+      --neon-blue: #6265fe;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; min-height: 100vh; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ============ ANIMATED GRADIENT BACKGROUND ============ */
+    .bg {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(174,127,255,0.85) 0%, transparent 40%),
+        radial-gradient(circle at 85% 75%, rgba(98,101,254,0.75) 0%, transparent 45%),
+        radial-gradient(ellipse at 50% 50%, rgba(147,84,255,0.65) 0%, transparent 60%),
+        radial-gradient(circle at 80% 10%, rgba(201,170,255,0.55) 0%, transparent 35%),
+        radial-gradient(circle at 20% 90%, rgba(62,41,107,0.85) 0%, transparent 50%),
+        linear-gradient(135deg, #2a1d52 0%, #1a1730 40%, #131321 100%);
+      animation: drift 22s ease-in-out infinite alternate;
+    }
+    @keyframes drift {
+      0%   { transform: scale(1) translate(0,0); filter: hue-rotate(0deg); }
+      100% { transform: scale(1.08) translate(-2%, 1%); filter: hue-rotate(-8deg); }
+    }
+    .bg-noise {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.55 0'/></filter><rect width='240' height='240' filter='url(%23n)' opacity='0.4'/></svg>");
+      mix-blend-mode: overlay;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    /* ============ LAYOUT ============ */
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 40px;
+    }
+    .brand-mini {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.25);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+    .brand-mark svg { width: 19px; height: 19px; }
+    .brand-name {
+      font-family: 'Chakra Petch', sans-serif;
+      font-weight: 700;
+      font-size: 17px;
+      letter-spacing: 1.5px;
+      line-height: 1;
+    }
+    .brand-tag {
+      font-family: 'Chakra Petch', monospace;
+      font-size: 9.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      opacity: 0.72;
+      margin-top: 3px;
+    }
+    .pedigree {
+      font-family: 'Chakra Petch', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+
+    .center {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 24px 60px;
+    }
+
+    /* ============ CARD ============ */
+    .card {
+      width: 100%;
+      max-width: 440px;
+      background: rgba(20, 16, 38, 0.55);
+      border: 1px solid rgba(255,255,255,0.18);
+      backdrop-filter: blur(28px) saturate(140%);
+      -webkit-backdrop-filter: blur(28px) saturate(140%);
+      border-radius: 20px;
+      padding: 40px 36px 32px;
+      position: relative;
+      box-shadow:
+        0 24px 60px rgba(10, 5, 25, 0.45),
+        0 0 0 1px rgba(147, 84, 255, 0.08) inset,
+        0 1px 0 rgba(255,255,255,0.08) inset;
+    }
+    .card::before {
+      /* subtle gradient ring on top */
+      content: '';
+      position: absolute;
+      top: 0; left: 8%; right: 8%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+      pointer-events: none;
+    }
+
+    .card-mark {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(174,127,255,0.85), rgba(147,84,255,1));
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 24px rgba(147,84,255,0.5);
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+    .card-mark svg { width: 28px; height: 28px; }
+
+    .eyebrow {
+      font-family: 'Chakra Petch', monospace;
+      letter-spacing: 0.22em;
+      font-size: 10.5px;
+      text-transform: uppercase;
+      color: var(--techno-purple);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .title {
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin: 0 0 10px;
+      background: linear-gradient(180deg, #fff 0%, #d8caf9 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.1;
+    }
+    .sub {
+      font-size: 13.5px;
+      color: rgba(255,255,255,0.78);
+      line-height: 1.55;
+      margin-bottom: 28px;
+    }
+    .sub strong {
+      color: #fff;
+      font-weight: 600;
+      background: rgba(147,84,255,0.25);
+      border: 1px solid rgba(174,127,255,0.4);
+      padding: 1px 7px;
+      border-radius: 5px;
+      font-family: 'Chakra Petch', monospace;
+      font-size: 12.5px;
+    }
+
+    .google-btn {
+      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 18px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.28);
+      background: rgba(255,255,255,0.95);
+      color: #1a1729;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+    }
+    .google-btn:hover {
+      background: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(147,84,255,0.4), 0 0 0 4px rgba(147,84,255,0.18);
+    }
+    .google-btn svg { width: 18px; height: 18px; }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 20px 0;
+      color: rgba(255,255,255,0.5);
+      font-size: 10.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-family: 'Chakra Petch', monospace;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    }
+
+    .note {
+      display: flex;
+      gap: 10px;
+      padding: 12px 14px;
+      background: rgba(147,84,255,0.12);
+      border: 1px solid rgba(174,127,255,0.28);
+      border-radius: 12px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.5;
+    }
+    .note-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--nexa-purple);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+      box-shadow: 0 0 12px rgba(147,84,255,0.6);
+    }
+    .note-icon svg { width: 11px; height: 11px; }
+
+    .card-foot {
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      font-size: 12px;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.6;
+      text-align: center;
+    }
+    .card-foot a {
+      color: var(--techno-purple);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .card-foot a:hover { text-decoration: underline; }
+
+    /* ============ FOOTER ============ */
+    .footer {
+      padding: 24px 40px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Chakra Petch', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+    }
+    .footer .tagline { font-weight: 700; letter-spacing: 0.2em; }
+    .footer .tagline span::after { content: '.'; color: var(--luminous-purple); }
+    .footer .tagline span { margin-right: 14px; }
+    .footer .tagline span:last-child { margin-right: 0; }
+
+    @media (max-width: 720px) {
+      .topbar { padding: 22px 22px; }
+      .footer { padding: 22px; flex-direction: column; gap: 10px; }
+      .card { padding: 32px 26px 26px; }
+      .title { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="bg-noise"></div>
+
+  <div class="page">
+    <header class="topbar">
+      <div class="brand-mini">
+        <div class="brand-mark">
+          <svg viewBox="0 0 24 24" fill="none">
+            <rect x="4" y="6" width="13" height="2.2" fill="currentColor"/>
+            <rect x="4" y="11" width="16" height="2.2" fill="currentColor"/>
+            <rect x="4" y="16" width="13" height="2.2" fill="currentColor"/>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-name">NEXA</div>
+          <div class="brand-tag">Ops Handbook</div>
+        </div>
+      </div>
+      <div class="pedigree">20 YEARS · EST. 2005</div>
+    </header>
+
+    <main class="center">
+      <div class="card">
+        <div class="card-mark">
+          <svg viewBox="0 0 24 24" fill="none">
+            <rect x="4" y="6" width="13" height="2.2" fill="currentColor"/>
+            <rect x="4" y="11" width="16" height="2.2" fill="currentColor"/>
+            <rect x="4" y="16" width="13" height="2.2" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="eyebrow">Employees only · Workspace-restricted</div>
+        <h1 class="title">Welcome back.</h1>
+        <p class="sub">Sign in with your <strong>@digitalnexa.com</strong> Google account to access SOPs, platform credentials, and the team handbook.</p>
+
+        <button class="google-btn" type="button">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09Z" fill="#4285F4"/>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.99.66-2.25 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23Z" fill="#34A853"/>
+            <path d="M5.84 14.1A6.6 6.6 0 0 1 5.5 12c0-.73.12-1.44.34-2.1V7.07H2.18a11 11 0 0 0 0 9.87l3.66-2.84Z" fill="#FBBC05"/>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.46 2.09 14.97 1 12 1A11 11 0 0 0 2.18 7.07l3.66 2.84C6.71 7.31 9.14 5.38 12 5.38Z" fill="#EA4335"/>
+          </svg>
+          Continue with Google
+        </button>
+
+        <div class="divider">Secure SSO</div>
+
+        <div class="note">
+          <span class="note-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <div>Personal Gmail accounts will be rejected. Only verified NEXA Workspace emails can access the handbook.</div>
+        </div>
+
+        <div class="card-foot">
+          Need help? <a href="mailto:murtaza@digitalnexa.com">Contact the Operations Manager.</a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="tagline">
+        <span>CONSULT</span><span>STRATEGISE</span><span>EXECUTE</span>
+      </div>
+      <div>www.digitalnexa.com</div>
+    </footer>
+  </div>
+</body>
+</html>

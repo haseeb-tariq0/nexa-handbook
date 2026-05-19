@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXA OPS HANDBOOK — System Document</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #F5F3EF;
+  color: #1C1C1C;
+  font-family: -apple-system, 'Inter', 'Segoe UI', sans-serif;
+  padding: 64px 56px 100px;
+  max-width: 1280px;
+  margin: 0 auto;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* ── HEADER ── */
+.header { margin-bottom: 56px; padding-bottom: 36px; border-bottom: 1px solid #E8E4DC; }
+.header-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 24px; }
+.header h1 { font-size: 32px; font-weight: 900; letter-spacing: -1px; color: #1C1C1C; margin-bottom: 5px; }
+.header-sub { font-size: 12px; color: #AAA; }
+.header-tag { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #BBB; padding: 6px 14px; border: 1px solid #E0DCD4; border-radius: 20px; white-space: nowrap; margin-top: 4px; }
+.vp-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.vp { background: #fff; border: 1px solid #E8E4DC; border-radius: 8px; padding: 14px 18px; }
+.vp-title { font-size: 13px; font-weight: 800; color: #1C1C1C; margin-bottom: 4px; }
+.vp-body { font-size: 11px; color: #999; line-height: 1.6; }
+
+/* ── SECTION LABELS ── */
+.sec { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #BBBBBB; margin-bottom: 10px; }
+.sec-sub { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #C8BFB0; margin-bottom: 8px; margin-top: 16px; }
+
+/* ── CARDS ── */
+.row { display: flex; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+.card {
+  flex: 1; background: #FFFFFF;
+  border: 1px solid #E8E4DC; border-left: 3px solid #E8E4DC;
+  border-radius: 8px; padding: 15px 17px; min-width: 150px;
+}
+.tag { font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px; }
+.title { font-size: 13px; font-weight: 700; color: #1C1C1C; margin-bottom: 4px; line-height: 1.3; }
+.body { font-size: 11px; color: #888; line-height: 1.65; }
+.note { display: block; font-size: 9px; color: #C0B8AC; margin-top: 6px; font-style: italic; }
+.confirm { display: block; font-size: 9px; font-weight: 700; color: #3AAA6A; margin-top: 6px; }
+
+/* ── ACCENT COLOURS ── */
+.purple { border-left-color: #9334FF; } .purple .tag { color: #9334FF; }
+.blue   { border-left-color: #3B8EE0; } .blue   .tag { color: #3B8EE0; }
+.teal   { border-left-color: #0AAA85; } .teal   .tag { color: #0AAA85; }
+.coral  { border-left-color: #E05A3B; } .coral  .tag { color: #E05A3B; }
+.rose   { border-left-color: #C04868; } .rose   .tag { color: #C04868; }
+.amber  { border-left-color: #C88010; } .amber  .tag { color: #C88010; }
+.slate  { border-left-color: #5A7888; } .slate  .tag { color: #5A7888; }
+.indigo { border-left-color: #5066D0; } .indigo .tag { color: #5066D0; }
+.green  { border-left-color: #1A7A6E; } .green  .tag { color: #1A7A6E; }
+
+/* ── KB GRID ── */
+.kb-wrap { background: #FFFFFF; border: 1px solid #E0CFFF; border-left: 3px solid #9334FF; border-radius: 8px; padding: 20px 22px; margin-bottom: 6px; }
+.kb-title { font-size: 14px; font-weight: 800; color: #1C1C1C; margin-bottom: 4px; }
+.kb-body { font-size: 11px; color: #888; line-height: 1.7; margin-bottom: 14px; }
+.kb-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 7px; }
+.kb-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+.kb-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; }
+.kb-item { background: #F7F4FF; border: 1px solid #E8E0FF; border-radius: 6px; padding: 10px 12px; }
+.kb-item-title { font-size: 10px; font-weight: 700; color: #9334FF; margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.5px; }
+.kb-item-body { font-size: 10px; color: #999; line-height: 1.5; }
+
+/* ── STRATEGY BOXES ── */
+.strategy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 6px; }
+.strat-box { background: #fff; border: 1px solid #E8E4DC; border-radius: 8px; padding: 18px 20px; }
+.strat-freq { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+.strat-title { font-size: 14px; font-weight: 800; color: #1C1C1C; margin-bottom: 5px; }
+.strat-body { font-size: 11px; color: #888; line-height: 1.7; }
+
+/* ── TIMING BOX ── */
+.timing-box { background: #1C1C1C; border-radius: 8px; padding: 18px 22px; margin-bottom: 8px; }
+.timing-title { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #666; margin-bottom: 12px; }
+.timing-row { display: flex; gap: 14px; margin-bottom: 8px; align-items: flex-start; }
+.timing-row:last-child { margin-bottom: 0; }
+.timing-date { font-size: 11px; font-weight: 700; color: #9334FF; white-space: nowrap; min-width: 160px; padding-top: 1px; }
+.timing-text { font-size: 11px; color: #AAA; line-height: 1.55; }
+.timing-text strong { color: #FFFFFF; }
+
+/* ── BRIEF WRAP ── */
+.brief-wrap { background: #fff; border: 1px solid #E0CFFF; border-left: 3px solid #9334FF; border-radius: 8px; padding: 20px 22px; margin-bottom: 6px; }
+.brief-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.brief-title { font-size: 14px; font-weight: 800; color: #1C1C1C; }
+.brief-badge { font-size: 9px; font-weight: 700; color: #9334FF; background: #F3EEFF; border: 1px solid #D8C0FF; border-radius: 20px; padding: 3px 10px; white-space: nowrap; }
+.brief-body { font-size: 11px; color: #888; line-height: 1.7; margin-bottom: 14px; }
+.brief-cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.brief-cols-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.brief-col { background: #F7F4FF; border: 1px solid #E0CFFF; border-radius: 6px; padding: 11px 13px; }
+.brief-col-title { font-size: 10px; font-weight: 700; color: #9334FF; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+.brief-col-body { font-size: 10px; color: #888; line-height: 1.55; }
+
+/* ── GATE ── */
+.gate { background: #1C1C1C; border-radius: 6px; padding: 9px 18px; margin: 8px 0; display: flex; align-items: center; gap: 14px; }
+.gate-label { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #555; flex-shrink: 0; }
+.gate-text { font-size: 12px; font-weight: 600; color: #fff; flex: 1; }
+.gate-sub { font-size: 10px; color: #666; flex-shrink: 0; }
+
+/* ── PUSH ── */
+.push { background: #1C1C1C; color: #fff; border-radius: 6px; padding: 11px 20px; margin: 8px 0; font-size: 11px; line-height: 1.65; display: flex; align-items: center; gap: 12px; }
+.push strong { color: #BFA8FF; }
+
+/* ── ARROW ── */
+.arrow { padding: 6px 0 6px 22px; }
+.arrow-line { width: 1px; height: 18px; background: #D8D4CC; }
+.arrow-head { width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid #D8D4CC; margin-left: -3.5px; }
+
+/* ── STEP BLOCK ── */
+.step-block { background: #fff; border: 1px solid #E8E4DC; border-radius: 8px; padding: 16px 20px; margin-bottom: 6px; }
+.step-block-title { font-size: 13px; font-weight: 800; color: #1C1C1C; margin-bottom: 3px; }
+.step-block-body { font-size: 11px; color: #888; line-height: 1.65; }
+
+/* ── NOTES ── */
+.note-box { border-radius: 7px; padding: 10px 15px; margin: 6px 0; font-size: 11px; line-height: 1.65; }
+.note-purple { background: #F7F4FF; border: 1px solid #D8C0FF; border-left: 3px solid #9334FF; color: #4A1E99; }
+.note-teal { background: #F0FEFA; border: 1px solid #B0EAD8; border-left: 3px solid #0AAA85; color: #2A7860; }
+.note-amber { background: #FFFBF0; border: 1px solid #EED8A0; border-left: 3px solid #C88010; color: #7A5808; }
+.note-slate { background: #F0F4F6; border: 1px solid #C0D0D8; border-left: 3px solid #5A7888; color: #2A4858; }
+.note-coral { background: #FEF0EC; border: 1px solid #F8D0B8; border-left: 3px solid #E05A3B; color: #7A2810; }
+.note-loop { background: #FFF8F0; border: 1px dashed #E0B870; border-radius: 7px; padding: 11px 16px; margin: 8px 0; font-size: 11px; color: #9A6A18; line-height: 1.65; display: flex; gap: 12px; align-items: flex-start; }
+
+/* ── AMENDMENT / CHECKLIST FLOW ── */
+.amend-wrap { background: #fff; border: 1px solid #E8E4DC; border-left: 3px solid #9334FF; border-radius: 8px; padding: 18px 20px; margin-bottom: 6px; }
+.amend-title { font-size: 13px; font-weight: 800; color: #1C1C1C; margin-bottom: 12px; }
+.amend-row { display: flex; gap: 4px; align-items: stretch; flex-wrap: wrap; }
+.amend-step { flex: 1; min-width: 110px; padding: 11px 13px; background: #FAF8FF; border: 1px solid #EAE0FF; border-radius: 6px; }
+.amend-num { font-size: 9px; font-weight: 800; color: #9334FF; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
+.amend-step-title { font-size: 11px; font-weight: 700; color: #1C1C1C; margin-bottom: 3px; }
+.amend-step-body { font-size: 10px; color: #888; line-height: 1.5; }
+.amend-arr { display: flex; align-items: center; color: #CCC; font-size: 13px; padding: 0 2px; align-self: center; }
+
+/* ── TOOL CARDS ── */
+.tool-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 6px; }
+.tool-card { background: #fff; border: 1px solid #E8E4DC; border-radius: 10px; padding: 18px 20px; display: flex; gap: 14px; align-items: flex-start; }
+.tool-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.tool-icon-purple { background: linear-gradient(135deg, #C880FF, #9334FF); }
+.tool-icon-slate { background: linear-gradient(135deg, #8AAABB, #5A7888); }
+.tool-content { flex: 1; }
+.tool-name { font-size: 13px; font-weight: 800; color: #1C1C1C; margin-bottom: 2px; }
+.tool-url { font-size: 9px; font-weight: 700; color: #9334FF; letter-spacing: 0.5px; margin-bottom: 6px; }
+.tool-url-slate { font-size: 9px; font-weight: 700; color: #5A7888; letter-spacing: 0.5px; margin-bottom: 6px; }
+.tool-body { font-size: 11px; color: #888; line-height: 1.6; }
+.tool-link { display: inline-block; margin-top: 8px; font-size: 10px; font-weight: 700; color: #fff; background: #9334FF; border-radius: 5px; padding: 4px 10px; text-decoration: none; }
+.tool-link-slate { display: inline-block; margin-top: 8px; font-size: 10px; font-weight: 700; color: #fff; background: #5A7888; border-radius: 5px; padding: 4px 10px; text-decoration: none; }
+
+/* ── MARQUEE ── */
+.marquee-wrap { background: #1C1C1C; border-radius: 8px; padding: 0; margin-bottom: 6px; overflow: hidden; display: flex; align-items: center; }
+.marquee-label { background: #9334FF; color: #fff; font-size: 9px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; padding: 10px 14px; white-space: nowrap; flex-shrink: 0; }
+.marquee-track { overflow: hidden; flex: 1; padding: 0 16px; }
+.marquee-inner { display: flex; gap: 48px; animation: ticker 30s linear infinite; width: max-content; }
+.marquee-inner:hover { animation-play-state: paused; }
+.marquee-item { font-size: 11px; color: #CCC; white-space: nowrap; padding: 10px 0; }
+.marquee-item strong { color: #fff; }
+@keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* ── MOM WRAP ── */
+.mom-wrap { background: #fff; border: 1px solid #E0CFFF; border-left: 3px solid #9334FF; border-radius: 8px; padding: 18px 20px; margin-bottom: 6px; }
+.mom-title { font-size: 13px; font-weight: 800; color: #1C1C1C; margin-bottom: 3px; }
+.mom-body { font-size: 11px; color: #888; line-height: 1.65; margin-bottom: 12px; }
+.mom-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.mom-col { background: #F7F4FF; border: 1px solid #E0CFFF; border-radius: 6px; padding: 12px 14px; }
+.mom-col-title { font-size: 10px; font-weight: 700; color: #9334FF; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+.mom-col-body { font-size: 11px; color: #555; line-height: 1.6; }
+
+/* ── ONBOARDING CHECKLIST ── */
+.checklist-wrap { background: #fff; border: 1px solid #B8EED8; border-left: 3px solid #0AAA85; border-radius: 8px; padding: 18px 20px; margin-bottom: 6px; }
+.checklist-title { font-size: 13px; font-weight: 800; color: #1C1C1C; margin-bottom: 4px; }
+.checklist-body { font-size: 11px; color: #888; line-height: 1.65; margin-bottom: 14px; }
+.checklist-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.checklist-item { background: #F3FFF8; border: 1px solid #C0EED4; border-radius: 6px; padding: 12px 14px; }
+.checklist-item-num { font-size: 9px; font-weight: 800; color: #0AAA85; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
+.checklist-item-title { font-size: 11px; font-weight: 700; color: #1C1C1C; margin-bottom: 3px; }
+.checklist-item-body { font-size: 10px; color: #888; line-height: 1.5; }
+.checklist-confirm { display: inline-block; margin-top: 6px; font-size: 9px; font-weight: 700; color: #0AAA85; background: #E8FFF4; border: 1px solid #A8DDD0; border-radius: 4px; padding: 2px 8px; }
+
+/* ── FUTURE / SUGGESTIONS ── */
+.future-wrap { background: #FBF8FF; border: 1px dashed #C8A8D8; border-radius: 8px; padding: 16px 18px; margin-bottom: 6px; }
+.future-label { font-size: 9px; font-weight: 700; color: #9334FF; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; }
+.future-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.future-item { flex: 1; min-width: 190px; background: #fff; border: 1px solid #E0C8F0; border-radius: 6px; padding: 11px 13px; }
+.future-item-title { font-size: 12px; font-weight: 700; color: #1C1C1C; margin-bottom: 3px; }
+.future-item-body { font-size: 11px; color: #888; line-height: 1.6; }
+.future-status { display: block; font-size: 9px; font-weight: 700; color: #9334FF; margin-top: 5px; }
+
+/* ── LEGEND ── */
+.legend { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 48px; padding-top: 20px; border-top: 1px solid #E8E4DC; }
+.leg { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #AAA; }
+.leg-bar { width: 14px; height: 3px; border-radius: 2px; }
+
+@media print { body { padding: 24px 32px; } }
+</style>
+</head>
+<body>
+
+
+<!-- ══════════════════════════════════════════════
+     HEADER
+══════════════════════════════════════════════ -->
+<div class="header">
+  <div class="header-top">
+    <div>
+      <h1>NEXA OPS HANDBOOK</h1>
+      <div class="header-sub">NEXA's internal operations platform — the single destination for every process, credential, document, tool, and piece of team knowledge across the agency</div>
+    </div>
+    <div class="header-tag">Internal Platform Vision — April 2026</div>
+  </div>
+  <div class="vp-row">
+    <div class="vp">
+      <div class="vp-title">One place for everything</div>
+      <div class="vp-body">SOPs, platform credentials, team contacts, internal communications, documents, and agency tools — all in one authenticated platform. No more searching Slack for a link, digging through Drive for a procedure, or asking a colleague for a login. Everything operational lives here.</div>
+    </div>
+    <div class="vp">
+      <div class="vp-title">One person keeps it accurate</div>
+      <div class="vp-body">The Operations Manager owns the Handbook. All content decisions, updates, and structural changes go through them. Departments can feed data into designated sections through processes the Operations Manager defines — but the integrity and accuracy of the platform rests with one accountable person.</div>
+    </div>
+    <div class="vp">
+      <div class="vp-title">A launchpad, not just a reference</div>
+      <div class="vp-body">The Handbook is also where staff access every tool NEXA has built — the Pricing Calculator, the Sales Portal, and any future internal platforms. One login. One place. Every resource the team needs to do their job well.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     01 — THE PLATFORM
+══════════════════════════════════════════════ -->
+<div class="sec">01 — What the platform is</div>
+
+<div class="row">
+  <div class="card purple">
+    <div class="tag">Platform type</div>
+    <div class="title">Authenticated Internal Web Application</div>
+    <div class="body">The NEXA Ops Handbook is a full web application accessible at a dedicated NEXA domain. Staff log in once using their NEXA credentials via Single Sign-On — the same login used across all NEXA tools. The platform is entirely internal. Every section, every record, and every tool link is built for the NEXA team only. Nothing is externally visible.</div>
+  </div>
+  <div class="card purple">
+    <div class="tag">Access</div>
+    <div class="title">Full Access for All Staff</div>
+    <div class="body">Once logged in, every NEXA team member has access to the full platform. There are no restricted sections or role-gated content. The Handbook is a shared resource for the entire agency — the assumption is that everyone on the team benefits from knowing how the business operates. Transparency is a feature, not a risk.</div>
+  </div>
+  <div class="card purple">
+    <div class="tag">Ownership</div>
+    <div class="title">Operations Manager as Content Controller</div>
+    <div class="body">All content within the Handbook is owned and controlled by the Operations Manager. They decide what is published, when it is updated, and how it is structured. Departments can contribute information through defined submission processes — but the Operations Manager is the gatekeeper. Nothing goes live without their approval.</div>
+    <span class="note">Departments submit → Operations Manager reviews and publishes.</span>
+  </div>
+</div>
+
+<div class="note-box note-purple">
+  The Operations Manager can set up lightweight external processes — a shared form, a recurring email, a Notion page — that allow individual departments to prepare and submit their own updates. This keeps content distributed in its creation but centralised in its publication. The Handbook stays accurate because one person is responsible for it.
+</div>
+
+<div class="arrow"><div class="arrow-line"></div><div class="arrow-head"></div></div>
+
+
+<!-- ══════════════════════════════════════════════
+     02 — LOGIN & HOME DASHBOARD
+══════════════════════════════════════════════ -->
+<div class="sec">02 — Login and the Home dashboard</div>
+
+<div class="strategy-grid">
+  <div class="strat-box" style="border-left: 3px solid #9334FF;">
+    <div class="strat-freq" style="color: #9334FF;">Authentication</div>
+    <div class="strat-title">NEXA SSO — One Login, Everything Unlocked</div>
+    <div class="strat-body">Staff log in using their NEXA credentials via Single Sign-On. The Handbook connects to NEXA's central identity provider — the same system managing access to Google Workspace, Slack, and all agency tools. A new team member added to NEXA's system gains immediate Handbook access. A team member who leaves has their access revoked the moment their NEXA account is deactivated. No separate password, no manual user management on the Handbook side.</div>
+  </div>
+  <div class="strat-box" style="border-left: 3px solid #5066D0;">
+    <div class="strat-freq" style="color: #5066D0;">Navigation</div>
+    <div class="strat-title">Persistent Sidebar — Always in View</div>
+    <div class="strat-body">After login, staff land on the Home dashboard. A fixed left sidebar shows the NEXA brand mark, the platform name, and all navigation sections. The sidebar is always visible regardless of which section is open — the active section is highlighted. Staff can move between any section instantly. The Home dashboard also shows the live news ticker and a summary of what is new or recently updated across the platform.</div>
+  </div>
+</div>
+
+<div class="sec-sub">The news ticker — company announcements always visible</div>
+
+<div class="marquee-wrap">
+  <div class="marquee-label">📢 Company Updates</div>
+  <div class="marquee-track">
+    <div class="marquee-inner">
+      <div class="marquee-item"><strong>New SOP published:</strong> Social Media Crisis Response — see the SOPs section for details</div>
+      <div class="marquee-item"><strong>Platform update:</strong> Canva for Teams renewed — all brand kits confirmed active</div>
+      <div class="marquee-item"><strong>Team update:</strong> Welcome Nadia R. joining the Social team this Monday</div>
+      <div class="marquee-item"><strong>Reminder:</strong> Q2 department reviews are due to the Operations Manager by April 30th</div>
+      <div class="marquee-item"><strong>Tool update:</strong> NEXA Pricing Calculator updated with new service tiers — check the Tools section</div>
+      <!-- Duplicate set for seamless loop -->
+      <div class="marquee-item"><strong>New SOP published:</strong> Social Media Crisis Response — see the SOPs section for details</div>
+      <div class="marquee-item"><strong>Platform update:</strong> Canva for Teams renewed — all brand kits confirmed active</div>
+      <div class="marquee-item"><strong>Team update:</strong> Welcome Nadia R. joining the Social team this Monday</div>
+      <div class="marquee-item"><strong>Reminder:</strong> Q2 department reviews are due to the Operations Manager by April 30th</div>
+      <div class="marquee-item"><strong>Tool update:</strong> NEXA Pricing Calculator updated with new service tiers — check the Tools section</div>
+    </div>
+  </div>
+</div>
+
+<div class="note-box note-purple">
+  The news ticker runs across the top of the Home dashboard at all times. It is the first thing staff see after login. The Operations Manager publishes all announcements — a new team member, a policy change, a tool update, a company milestone. Announcements are also archived in the Internal Comms section so nothing important is ever lost. Hovering over the ticker pauses it so staff can read a full message.
+</div>
+
+<div class="arrow"><div class="arrow-line"></div><div class="arrow-head"></div></div>
+
+
+<!-- ══════════════════════════════════════════════
+     03 — THE SECTIONS
+══════════════════════════════════════════════ -->
+<div class="sec">03 — Platform sections</div>
+
+<div class="kb-wrap">
+  <div class="kb-title">Six sections. Every operational need NEXA has, in one place.</div>
+  <div class="kb-body">Each section of the Handbook is a dedicated, fully functional module. Staff navigate between them instantly via the sidebar. The Operations Manager controls all content across all sections. The platform is always up to date because there is one person responsible for keeping it that way.</div>
+  <div class="kb-grid">
+    <div class="kb-item">
+      <div class="kb-item-title">SOPs</div>
+      <div class="kb-item-body">The full agency procedure library. Every department's SOPs in one searchable place — with owner, last updated date, and linked templates.</div>
+    </div>
+    <div class="kb-item">
+      <div class="kb-item-title">Platform Logins</div>
+      <div class="kb-item-body">Every tool NEXA uses, with credentials, access instructions, and account context. Updated in one place — every staff member sees the current information immediately.</div>
+    </div>
+    <div class="kb-item">
+      <div class="kb-item-title">Team</div>
+      <div class="kb-item-body">The NEXA team directory. Department, role, and direct contact options for every staff member. Maintained by the Admin. Always current.</div>
+    </div>
+    <div class="kb-item">
+      <div class="kb-item-title">Documents</div>
+      <div class="kb-item-body">Agency-wide document library. Brand guidelines, templates, policies, onboarding packs, and reference materials — indexed, described, and linked to the source.</div>
+    </div>
+    <div class="kb-item">
+      <div class="kb-item-title">NEXA Tools</div>
+      <div class="kb-item-body">The launchpad for every internal NEXA platform and tool. Pricing Calculator, Sales Portal, and more — described and directly accessible from one section.</div>
+    </div>
+  </div>
+  <div style="margin-top: 7px;">
+    <div class="kb-item" style="background: #F7F4FF; border: 1px solid #E8E0FF; border-radius: 6px; padding: 10px 12px;">
+      <div class="kb-item-title">Internal Comms</div>
+      <div class="kb-item-body">Communication templates, escalation paths, meeting protocols, and tone guidelines. Company announcements archived here so nothing important disappears into a Slack thread.</div>
+    </div>
+  </div>
+</div>
+
+<div class="arrow"><div class="arrow-line"></div><div class="arrow-head"></div></div>
+
+
+<!-- ══════════════════════════════════════════════
+     04 — SOPS
+══════════════════════════════════════════════ -->
+<div class="sec">04 — SOPs</div>
+
+<div class="brief-wrap">
+  <div class="brief-header">
+    <div class="brief-title">The agency's full procedure library — searchable, organised, and always current</div>
+    <div class="brief-badge">Owned by the Operations Manager</div>
+  </div>
+  <div class="brief-body">SOPs in the Handbook are the single authoritative reference for how NEXA does things. Each procedure is written and published by the Operations Manager, who coordinates with department heads to ensure accuracy. When a process changes, the Operations Manager updates the relevant SOP and the change is immediately visible to the whole team. There is no version confusion, no outdated PDF, and no "which one is the latest?" — there is only the Handbook.</div>
+  <div class="brief-cols">
+    <div class="brief-col">
+      <div class="brief-col-title">What each SOP contains</div>
+      <div class="brief-col-body">Procedure name, owning department, the step-by-step process, any important notes or exceptions, last updated date, and linked templates or external resources the staff member needs to execute the procedure.</div>
+    </div>
+    <div class="brief-col">
+      <div class="brief-col-title">Organised by department</div>
+      <div class="brief-col-body">SOPs are tagged by department — Social, Content, Design, Web, Strategy, Finance, Operations. Staff can filter by their department to see only what is relevant to them, or browse the full library. Full-text search works across all SOPs.</div>
+    </div>
+    <div class="brief-col">
+      <div class="brief-col-title">How departments contribute</div>
+      <div class="brief-col-body">Department heads submit SOP drafts or updates to the Operations Manager through a defined process — a shared form, a structured email, or a dedicated submission template. The Operations Manager reviews, edits, and publishes. The department has input; the Handbook has one owner.</div>
+    </div>
+    <div class="brief-col">
+      <div class="brief-col-title">Linked resources</div>
+      <div class="brief-col-body">Each SOP links directly to any templates, forms, or tools the staff member needs. Opening an SOP gives you everything required to follow it — no hunting for the right file in a shared drive.</div>
+    </div>
+  </div>
+</div>
+
+<div class="arrow"><div class="arrow-line"></div><div class="arrow-head"></div></div>
+
+
+<!-- ══════════════════════════════════════════════
+     05 — PLATFORM LOGINS
+══════════════════════════════════════════════ -->
+<div class="sec">05 — Platform logins and credentials</div>
+
+<div class="brief-wrap" style="border-left-color: #E05A3B; border-color: #F8D8C8;">
+  <div class="brief-header">
+    <div class="brief-title">Every tool NEXA uses — access instructions and credentials in one place</div>
+    <div class="brief-badge" style="color: #E05A3B; background: #FEF0EC; border-color: #F8D0B8;">Updated centrally by the Operations Manager</div>
+  </div>
+  <div class="brief-body">The Platform Logins section replaces scattered spreadsheets, Slack messages hunting for passwords, and "ask the AM" approaches to tool access. Every platform NEXA uses — social scheduling, analytics, design tools, reporting systems, AI tools, project management, finance platforms — is listed here with everything a staff member needs to access and use it. When credentials change, the Operations Manager updates the Handbook once and the entire team sees the correct information immediately.</div>
+  <div class="brief-cols" style="grid-template-columns: repeat(3, 1fr);">
+    <div class="brief-col" style="background: #FFF8F5; border-color: #F8D8C8;">
+      <div class="brief-col-title" style="color: #E05A3B;">What's listed per tool</div>
+      <div class="brief-col-body">Tool name and category, login method (SSO, shared account, or individual), access instructions, account tier and plan details, and the name of the person who owns or manages the account at NEXA.</div>
+    </div>
+    <div class="brief-col" style="background: #FFF8F5; border-color: #F8D8C8;">
+      <div class="brief-col-title" style="color: #E05A3B;">How credentials are displayed</div>
+      <div class="brief-col-body">Shared credentials are shown directly on the tool's card. Tools that require individual accounts provide step-by-step instructions for requesting access. Sensitive credentials include a brief note on responsible use alongside the login details.</div>
+    </div>
+    <div class="brief-col" style="background: #FFF8F5; border-color: #F8D8C8;">
+      <div class="brief-col-title" style="color: #E05A3B;">Categories</div>
+      <div class="brief-col-body">Social and scheduling, analytics and reporting, creative and design, AI and productivity, project management, finance and billing, communication tools. Every platform organised by how it is used, not alphabetically.</div>
+    </div>
+  </div>
+</div>
+
+<div class="note-box note-amber">
+  When a platform is added, changed, or discontinued, the Operations Manager updates this section. Staff are notified via the news ticker. The Handbook is always the current reference — if a credential shown here does not work, that is a signal to report to the Operations Manager that an update is needed.
+</div>
+
+<div class="arrow"><div class="arrow-line"></div><div class="arrow-head"></div></div>
+
+
+<!-- ══════════════════════════════════════════════
+     06 — TEAM DIRECTORY
+══════════════════════════════════════════════ -->
+<div class="sec">06 — Team directory</div>
+
+<div class="row">
+  <div class="card rose">
+    <div class="tag">Directory</div>
+    <div class="title">Every NEXA Team Member, in One View</div>
+    <div class="body">The Team section shows every NEXA staff member — their department, role, and direct contact options. Staff are displayed as cards in a filterable grid. Filter by department to see Social, Content, Design, Web, Strategy, Finance, or Operations. All profiles are created and maintained by the Admin. Staff do not edit their own profiles.</div>
+  </div>
+  <div class="card rose">
+    <div class="tag">Contact</div>
+    <div class="title">One-Click to Reach Anyone</div>
+    <div class="body">Each profile card shows the staff member's name, department, role, and direct contact buttons — email, Slack handle, and WhatsApp where applicable. One click opens the relevant communication. No searching for email addresses or Slack handles. The Handbook is the agency phonebook.</div>
+  </div>
+  <div class="card rose">
+    <div class="tag">Structure</div>
+    <div class="title">Org Chart View</div>
+    <div class="body">Alongside the card grid, a second view shows the full NEXA organisational chart — who reports to whom, how departments are structured, and where each role sits in the agency hierarchy. Useful for new starters orienting themselves, and for leadership reviewing team structure at a glance.</div>
+  </div>
+</div>
+
+<div class="note-box note-coral">
+  All team profiles are managed by the Admin. When a new team member joins, the Admin creates their profile. When someone leaves or changes role, the Admin updates it. The directory is always a reflection of the current team — not who was here six months ago.
+</div>
+
+<div class="arrow"><div class="arrow-line"></div><div class="arrow-head"></div></div>
+
+
+<!-- ══════════════════════════════════════════════
+     07 — DOCUMENTS
+══════════════════════════════════════════════ -->
+<div class="sec">07 — Document library</div>
+
+<div class="kb-wrap" style="border-left-color: #5066D0; border-color: #C8C8F8;">
+  <div class="kb-title">Every agency document — indexed, described, and one click from the source</div>
+  <div class="kb-body">The Documents section is the curated front door to everything NEXA has documented. Rather than staff navigating folder structures in Google Drive, the Handbook presents every important document in a searchable library — each one named, described, and linked directly to its source. The Operations Manager maintains the index. Departments submit documents for inclusion; the Operations Manager decides what belongs in the library and how it is categorised.</div>
+  <div class="kb-grid-4" style="gap: 7px;">
+    <div class="kb-item" style="background: #F3F3FF; border-color: #D0D0F8;">
+      <div class="kb-item-title" style="color: #5066D0;">Brand and Identity</div>
+      <div class="kb-item-body">NEXA brand guidelines, logo files, colour palette, typography rules, brand voice document, and photography direction. The definitive reference for how NEXA presents itself — internally and externally.</div>
+    </div>
+    <div class="kb-item" style="background: #F3F3FF; border-color: #D0D0F8;">
+      <div class="kb-item-title" style="color: #5066D0;">Templates</div>
+      <div class="kb-item-body">Every NEXA output template — strategy decks, social media calendars, design briefs, performance report decks, shoot plans, proposal documents. Click to open in Drive. Always the current version.</div>
+    </div>
+    <div class="kb-item" style="background: #F3F3FF; border-color: #D0D0F8;">
+      <div class="kb-item-title" style="color: #5066D0;">Policies</div>
+      <div class="kb-item-body">HR policies, data handling, leave, expenses, social media usage, device policy. All current versions, linked directly. New policies are announced via the news ticker when published to this section.</div>
+    </div>
+    <div class="kb-item" style="background: #F3F3FF; border-color: #D0D0F8;">
+      <div class="kb-item-title" style="color: #5066D0;">Onboarding Packs</div>
+      <div class="kb-item-body">Department-specific onboarding documents, first-week guides, and tool access instructions for new starters. Linked from the Onboarding section of the Handbook for easy access during the joining process.</div>
+    </div>
+  </div>
+</div>
+
+<div class="arrow"><div class="arrow-line"></div><div class="arrow-head"></div></div>
+
+
+<!-- ══════════════════════════════════════════════
+     08 — NEXA TOOLS
+══════════════════════════════════════════════ -->
+<div class="sec">08 — NEXA tools</div>
+
+<div class="step-block">
+  <div class="step-block-title">Every internal NEXA tool — described and directly accessible from one section</div>
+  <div class="step-block-body">NEXA has built a suite of internal platforms and tools to support how the agency operates and sells. The Tools section is the permanent launchpad for all of them. Staff no longer search Slack for a URL or bookmark tools individually — every NEXA tool lives here with a description of what it does, who should use it, and a direct link to open it. As NEXA builds more tools, they are added to this section and announced via the news ticker.</div>
+</div>
+
+<div class="tool-grid">
+  <div class="tool-card">
+    <div class="tool-icon tool-icon-purple">🧮</div>
+    <div class="tool-content">
+      <div class="tool-name">NEXA Pricing Calculator</div>
+      <div class="tool-url">pricingcalc.digitalnexa.com</div>
+      <div class="tool-body">The internal pricing tool for building and validating service proposals. Account managers and the sales team use the Calculator to scope retainer packages, one-off projects, and custom deliverable combinations. Outputs a structured price breakdown that feeds directly into client proposals. Ensures consistent, approved pricing across every deal — no one quotes off the top of their head.</div>
+      <a href="https://pricingcalc.digitalnexa.com/" target="_blank" class="tool-link">Open Calculator →</a>
+    </div>
+  </div>
+  <div class="tool-card">
+    <div class="tool-icon tool-icon-slate">📊</div>
+    <div class="tool-content">
+      <div class="tool-name">NEXA Sales Portal</div>
+      <div class="tool-url-slate">scorecard.digitalnexa.com</div>
+      <div class="tool-body">The sales team's operational hub. The Sales Portal tracks prospects, pipeline health, deal status, and account scoring. Used to qualify inbound leads, structure outreach, and maintain visibility across the full sales funnel. Managers use it to review pipeline performance. Account Managers reference it to understand where a new client came from and what was discussed at the sales stage.</div>
+      <a href="https://scorecard.digitalnexa.com/" target="_blank" class="tool-link-slate">Open Sales Portal →</a>
+    </div>
+  </div>
+</div>
+
+<div class="note-box note-slate">
+  The Tools section grows as NEXA builds. Every new internal platform — reporting dashboards, project trackers, AI productivity tools, department-specific applications — gets added here when it is ready. The Handbook becomes the permanent, maintained record of everything NEXA has built internally, and the one place any team member goes to find and access it.
+</div>
+
+<div class="arrow"><div class="arrow-line"></div><div class="arrow-head"></div></div>
+
+
+<!-- ══════════════════════════════════════════════
+     09 — INTERNAL COMMS
+══════════════════════════════════════════════ -->
+<div class="sec">09 — Internal communications</div>
+
+<div class="mom-wrap">
+  <div class="mom-title">How NEXA communicates internally — standards, templates, and an archive of what has been said</div>
+  <div class="mom-body">The Internal Comms section documents how NEXA's team communicates with each other and across departments. It covers which channels are used for what, how quickly staff are expected to respond, how to escalate, and how meetings should be run. Email and message templates for common scenarios are available here so staff can communicate consistently without drafting from scratch. Company announcements published via the news ticker are archived in this section so every piece of important communication is searchable and permanent.</div>
+  <div class="mom-cols">
+    <div class="mom-col">
+      <div class="mom-col-title">Templates library</div>
+      <div class="mom-col-body">Pre-written templates for internal requests, escalations, meeting agendas, feedback, and handovers. Staff copy and adapt them. Templates reflect NEXA's communication standards — professional, clear, and direct. Published and maintained by the Operations Manager.</div>
+    </div>
+    <div class="mom-col">
+      <div class="mom-col-title">Announcements archive</div>
+      <div class="mom-col-body">Every company-wide announcement that has appeared in the news ticker is archived here — searchable, dated, and permanent. A new team member can read the full history of what has been communicated across the business since the Handbook launched.</div>
+    </div>
+  </div>
+</div>
+
+<div class="row" style="margin-top: 8px;">
+  <div class="card indigo">
+    <div class="tag">Channels</div>
+    <div class="title">What Goes Where</div>
+    <div class="body">Which conversations belong in Slack, which in email, and which warrant a meeting — documented and agreed. Expected response times per channel. When to use a direct message versus a channel post. Clear standards that prevent over-communication in some places and under-communication in others.</div>
+  </div>
+  <div class="card indigo">
+    <div class="tag">Escalation</div>
+    <div class="title">Escalation Paths</div>
+    <div class="body">For every type of internal issue — a project blocking, a resource gap, a client complaint, an interpersonal conflict — the escalation path is documented. Who to go to first, what context to bring, and what to expect back. Staff never feel stuck not knowing how to raise something important.</div>
+  </div>
+  <div class="card indigo">
+    <div class="tag">Meetings</div>
+    <div class="title">Meeting Standards</div>
+    <div class="body">When to book a meeting versus send a message. How to write an agenda. How minutes should be recorded and distributed. How to follow up on action items. Meeting culture is part of how NEXA operates — these are the standards that keep meetings productive and rare.</div>
+  </div>
+</div>
+
+<div class="arrow"><div class="arrow-line"></div><div class="arrow-head"></div></div>
+
+
+<!-- ══════════════════════════════════════════════
+     10 — ONBOARDING
+══════════════════════════════════════════════ -->
+<div class="sec">10 — Onboarding for new employees</div>
+
+<div class="checklist-wrap">
+  <div class="checklist-title">New starters have one place to begin — a structured checklist they work through on arrival</div>
+  <div class="checklist-body">When a new team member joins NEXA, their first stop is the Onboarding section of the Handbook. It presents a structured checklist of everything they need to read, set up, and confirm in their first week. Each item links to the relevant section of the Handbook or an external resource. As they complete each step, they mark it as done — giving them a clear view of their progress and giving the Operations Manager confirmation that the joining process has been completed properly.</div>
+  <div class="checklist-grid">
+    <div class="checklist-item">
+      <div class="checklist-item-num">Day 1</div>
+      <div class="checklist-item-title">Platform access and setup</div>
+      <div class="checklist-item-body">Confirm SSO login is working. Verify access to Google Workspace, Slack, and all essential tools. Review the Platform Logins section for tools relevant to your department.</div>
+      <span class="checklist-confirm">✓ Mark as complete</span>
+    </div>
+    <div class="checklist-item">
+      <div class="checklist-item-num">Day 1</div>
+      <div class="checklist-item-title">Meet your team</div>
+      <div class="checklist-item-body">Open the Team Directory and familiarise yourself with your department and the wider NEXA team. Note your line manager, direct colleagues, and key contacts in other departments.</div>
+      <span class="checklist-confirm">✓ Mark as complete</span>
+    </div>
+    <div class="checklist-item">
+      <div class="checklist-item-num">Day 1–2</div>
+      <div class="checklist-item-title">Read your department's SOPs</div>
+      <div class="checklist-item-body">Open the SOPs section and filter by your department. Read every procedure relevant to your role. These are the standards NEXA holds the team to — knowing them from day one matters.</div>
+      <span class="checklist-confirm">✓ Mark as complete</span>
+    </div>
+    <div class="checklist-item">
+      <div class="checklist-item-num">Day 2–3</div>
+      <div class="checklist-item-title">Review company policies</div>
+      <div class="checklist-item-body">Open the Documents section and read all current company policies — HR, data handling, leave, expenses, device use, and social media. These are non-negotiable expectations for all staff.</div>
+      <span class="checklist-confirm">✓ Mark as complete</span>
+    </div>
+    <div class="checklist-item">
+      <div class="checklist-item-num">Day 3–4</div>
+      <div class="checklist-item-title">Internal comms standards</div>
+      <div class="checklist-item-body">Read the Internal Comms section. Understand how NEXA communicates — which channels, what response times, how to escalate, and how meetings run. You are expected to follow these from the start.</div>
+      <span class="checklist-confirm">✓ Mark as complete</span>
+    </div>
+    <div class="checklist-item">
+      <div class="checklist-item-num">Day 4–5</div>
+      <div class="checklist-item-title">Explore NEXA tools</div>
+      <div class="checklist-item-body">Visit the NEXA Tools section and familiarise yourself with the tools relevant to your role — the Pricing Calculator, Sales Portal, and any others your department uses. Access them from here.</div>
+      <span class="checklist-confirm">✓ Mark as complete</span>
+    </div>
+  </div>
+</div>
+
+<div class="note-box note-teal">
+  The "Mark as complete" function exists exclusively within the Onboarding checklist. It gives new starters a sense of structured progress during their first week and gives the Operations Manager a simple confirmation that the joining process has been followed. It is not used elsewhere in the platform.
+</div>
+
+
+
+<!-- ══════════════════════════════════════════════
+     SUGGESTIONS FOR FUTURE UPDATES
+══════════════════════════════════════════════ -->
+<div class="sec">Suggestions for future updates</div>
+
+<div class="future-wrap">
+  <div class="future-label">Ideas worth building when the platform is established and the team is using it well.</div>
+  <div class="future-row">
+    <div class="future-item">
+      <div class="future-item-title">SOCIALVERSE Integration</div>
+      <div class="future-item-body">SOCIALVERSE is NEXA's social media operating system — a separate internal platform. As both mature, the Handbook's SOP and document library could surface SOCIALVERSE-specific procedures in context. An AM working in SOCIALVERSE could access the relevant SOP without switching to the Handbook manually. A link between the two platforms makes both more useful.</div>
+      <span class="future-status">Suggested when both platforms are fully adopted by the team.</span>
+    </div>
+    <div class="future-item">
+      <div class="future-item-title">Department Dashboards</div>
+      <div class="future-item-body">A lightweight "My Department" view personalised to the logged-in user's team — showing only their department's SOPs, relevant tools, their team card, and their department's most recently updated documents. Not a restriction, but a convenience layer that makes the platform faster to use for day-to-day work without navigating the full library every time.</div>
+      <span class="future-status">Suggested after the platform has at least 3 months of usage data.</span>
+    </div>
+    <div class="future-item">
+      <div class="future-item-title">SOP Submission Portal</div>
+      <div class="future-item-body">A structured built-in form that department heads use to submit new or updated SOPs directly to the Operations Manager. Currently this happens via external tools (a shared form or email). Bringing the submission process into the Handbook itself would close the loop — everything to do with SOPs, from drafting to publication, lives in one place.</div>
+      <span class="future-status">Suggested once the SOP library has reached full coverage across all departments.</span>
+    </div>
+    <div class="future-item">
+      <div class="future-item-title">Staff Recognition Program</div>
+      <div class="future-item-body">A peer-recognition system using the three NEXA coins — Sage (wise counsel), Arbiter (resolves challenges), Champion (exceeds expectations). Staff nominate colleagues, managers confirm awards, and recognition is published to a feed and pushed to Slack as custom emoji. Tracks recognition history per person over time. A culture feature worth building once the operational foundation is solid.</div>
+      <span class="future-status">Suggested for Phase 2 — when the platform is stable and actively used.</span>
+    </div>
+    <div class="future-item">
+      <div class="future-item-title">Google Workspace Deep Integration</div>
+      <div class="future-item-body">Currently the Documents section links to files in Google Drive. A deeper integration would allow documents to be previewed within the Handbook without leaving the platform — and could surface recently accessed or frequently used Drive documents per user on their Home dashboard, based on their Google Workspace activity.</div>
+      <span class="future-status">Suggested when a dedicated technical resource is available to build the integration.</span>
+    </div>
+    <div class="future-item">
+      <div class="future-item-title">Handbook Usage Analytics</div>
+      <div class="future-item-body">A simple admin view showing which sections are most visited, which SOPs are most accessed, and which tools are clicked most often from the Tools section. Gives the Operations Manager data to prioritise what to improve and evidence that the platform is being used. Helps identify gaps — sections that are rarely visited may indicate missing content or unclear navigation.</div>
+      <span class="future-status">Suggested after 6 months of operation — when there is meaningful data to analyse.</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- LEGEND -->
+<div class="legend">
+  <div class="leg"><div class="leg-bar" style="background:#9334FF;"></div>Core platform</div>
+  <div class="leg"><div class="leg-bar" style="background:#0AAA85;"></div>SOPs and onboarding</div>
+  <div class="leg"><div class="leg-bar" style="background:#E05A3B;"></div>Platform logins</div>
+  <div class="leg"><div class="leg-bar" style="background:#C04868;"></div>Team directory</div>
+  <div class="leg"><div class="leg-bar" style="background:#5066D0;"></div>Documents and comms</div>
+  <div class="leg"><div class="leg-bar" style="background:#5A7888;"></div>NEXA tools</div>
+  <div class="leg"><div class="leg-bar" style="background:#0AAA85;"></div>Onboarding</div>
+  <div class="leg"><div class="leg-bar" style="background:#1C1C1C;"></div>Announcements and gates</div>
+</div>
+
+
+</body>
+</html>

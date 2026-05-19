@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEXA brand mockups — review</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Chakra+Petch:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f5f5f5;
+      color: #1a1729;
+      min-height: 100vh;
+      padding: 32px 24px 56px;
+    }
+    .wrap { max-width: 1180px; margin: 0 auto; }
+    .header { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; }
+    .logo {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #9354ff, #683eb5);
+      display: inline-flex; align-items: center; justify-content: center;
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(147,84,255,0.3);
+    }
+    .logo svg { width: 22px; height: 22px; }
+    h1 {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 26px; font-weight: 700;
+      letter-spacing: 0.5px; margin: 0;
+    }
+    .sub { color: #6b657f; font-size: 14px; max-width: 720px; margin: 8px 0 28px; line-height: 1.55; }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 36px 0 16px;
+    }
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #683eb5;
+      font-family: 'Chakra Petch', monospace;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-title::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: #9354ff;
+      border-radius: 50%;
+      box-shadow: 0 0 12px rgba(147,84,255,0.6);
+    }
+    .section-meta { font-size: 11px; color: #9c95b0; font-family: 'Chakra Petch', monospace; letter-spacing: 0.12em; }
+
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media (max-width: 800px) { .grid { grid-template-columns: 1fr; } }
+    .card {
+      background: #fff;
+      border: 1px solid #ebe7f3;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 0.15s, box-shadow 0.15s, border 0.15s;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: #9354ff;
+      box-shadow: 0 10px 24px rgba(20,14,38,0.08);
+    }
+    .preview {
+      height: 320px;
+      background: #fafafb;
+      border-bottom: 1px solid #ebe7f3;
+      position: relative;
+      overflow: hidden;
+    }
+    .preview.dark { background: #0e0c1a; }
+    .preview iframe {
+      width: 1400px; height: 900px;
+      border: 0;
+      position: absolute;
+      top: 0; left: 0;
+      transform-origin: top left;
+      transform: scale(0.4);
+      pointer-events: none;
+    }
+    .body { padding: 20px 22px 22px; }
+    .label {
+      font-family: 'Chakra Petch', monospace;
+      font-size: 10.5px; letter-spacing: 0.18em;
+      text-transform: uppercase; color: #9354ff;
+      font-weight: 700;
+    }
+    .title { font-size: 18px; font-weight: 600; margin: 4px 0 6px; }
+    .desc { font-size: 13px; color: #423d54; line-height: 1.55; margin-bottom: 14px; }
+    .meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+    .chip {
+      font-size: 10.5px; padding: 3px 9px; border-radius: 99px;
+      background: #f3eeff; color: #683eb5; font-weight: 600;
+    }
+    .actions { display: flex; gap: 10px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 9px 16px; border-radius: 8px;
+      text-decoration: none; font-size: 12.5px; font-weight: 600;
+      transition: all 0.12s;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #9354ff, #683eb5);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(147,84,255,0.3);
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(147,84,255,0.4); }
+
+    .palette { margin-top: 32px; padding: 24px; background: #fff; border: 1px solid #ebe7f3; border-radius: 16px; }
+    .palette h2 { font-size: 13px; font-weight: 700; margin: 0 0 14px; letter-spacing: 0.14em; text-transform: uppercase; color: #683eb5; font-family: 'Chakra Petch',monospace; }
+    .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px; }
+    .swatch { border-radius: 8px; padding: 12px 10px; font-size: 9.5px; font-family: 'Chakra Petch', monospace; }
+    .swatch .name { font-weight: 600; letter-spacing: 0.06em; }
+    .swatch .hex { opacity: 0.85; margin-top: 2px; }
+
+    .footnote { font-size: 11px; color: #6b657f; margin-top: 16px; line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="header">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" fill="none"><rect x="4" y="6" width="13" height="2.2" fill="currentColor"/><rect x="4" y="11" width="16" height="2.2" fill="currentColor"/><rect x="4" y="16" width="13" height="2.2" fill="currentColor"/></svg>
+      </div>
+      <div>
+        <h1>Brand mockups — for review</h1>
+        <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#9c95b0;font-weight:500;font-family:'Chakra Petch',monospace;margin-top:4px">NEXA Ops Handbook · Branding pass</div>
+      </div>
+    </div>
+    <p class="sub">Two directions for the <strong>login page</strong>, applying the NEXA 2025 brand: official palette, Poppins + Chakra Petch type, gradient backgrounds, and the brand tagline. Pick one — or mix — and I'll wire it into the live <code>/login</code> route.</p>
+
+    <!-- LOGIN MOCKUPS -->
+    <div class="section-head">
+      <div class="section-title">Login page · primary</div>
+      <div class="section-meta">Pick one</div>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="preview"><iframe src="login-split.html" scrolling="no"></iframe></div>
+        <div class="body">
+          <div class="label">Option A</div>
+          <div class="title">Split screen — brand panel + form</div>
+          <div class="desc">Brand artwork on the left (grainy purple gradient, logo, headline, values, tagline), clean white sign-in form on the right. Agency-premium feel, lots of room for brand storytelling, calmer for daily sign-in.</div>
+          <div class="meta">
+            <span class="chip">Brand panel left</span>
+            <span class="chip">Light form</span>
+            <span class="chip">Values shown</span>
+          </div>
+          <div class="actions">
+            <a class="btn btn-primary" href="login-split.html" target="_blank">Open mockup →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="preview dark"><iframe src="login-bleed.html" scrolling="no"></iframe></div>
+        <div class="body">
+          <div class="label">Option B</div>
+          <div class="title">Full-bleed gradient — floating card</div>
+          <div class="desc">Edge-to-edge animated purple gradient background with grain, glassmorphic sign-in card floating in the centre. Single-screen drama. White Google button pops hard against the purple. Closest to the brand deck's hero pages.</div>
+          <div class="meta">
+            <span class="chip">Edge-to-edge gradient</span>
+            <span class="chip">Glassmorphism</span>
+            <span class="chip">Animated bg</span>
+          </div>
+          <div class="actions">
+            <a class="btn btn-primary" href="login-bleed.html" target="_blank">Open mockup →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD MOCKUPS (bonus) -->
+    <div class="section-head">
+      <div class="section-title">Dashboard · bonus / reference</div>
+      <div class="section-meta">Built earlier — happy to discard</div>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="preview"><iframe src="mockup-light.html" scrolling="no"></iframe></div>
+        <div class="body">
+          <div class="label">Bonus</div>
+          <div class="title">Dashboard — light brand</div>
+          <div class="desc">Same brand applied to the home dashboard. Useful as a reference for how the chosen login direction would extend into the rest of the app.</div>
+          <div class="actions">
+            <a class="btn btn-primary" href="mockup-light.html" target="_blank">Open →</a>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="preview dark"><iframe src="mockup-dark.html" scrolling="no"></iframe></div>
+        <div class="body">
+          <div class="label">Bonus</div>
+          <div class="title">Dashboard — dark brand</div>
+          <div class="desc">Dark dashboard variant, matching the full-bleed login direction. Use as a sanity check before committing.</div>
+          <div class="actions">
+            <a class="btn btn-primary" href="mockup-dark.html" target="_blank">Open →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="palette">
+      <h2>Brand palette extracted from the deck</h2>
+      <div class="swatches">
+        <div class="swatch" style="background:#f3eeff;color:#683eb5"><div class="name">DIGITAL WHITE</div><div class="hex">#F3EEFF</div></div>
+        <div class="swatch" style="background:#e4d4ff;color:#683eb5"><div class="name">SOFT PURPLE</div><div class="hex">#E4D4FF</div></div>
+        <div class="swatch" style="background:#c9aaff;color:#3e296b"><div class="name">TECHNO PURPLE</div><div class="hex">#C9AAFF</div></div>
+        <div class="swatch" style="background:#ae7fff;color:#fff"><div class="name">LUMINOUS</div><div class="hex">#AE7FFF</div></div>
+        <div class="swatch" style="background:#9354ff;color:#fff"><div class="name">NEXA PURPLE</div><div class="hex">#9354FF</div></div>
+        <div class="swatch" style="background:#683eb5;color:#fff"><div class="name">PURPLE WAVE</div><div class="hex">#683EB5</div></div>
+        <div class="swatch" style="background:#3e296b;color:#fff"><div class="name">NIGHT PURPLE</div><div class="hex">#3E296B</div></div>
+        <div class="swatch" style="background:#131321;color:#fff"><div class="name">DARK PURPLE</div><div class="hex">#131321</div></div>
+        <div class="swatch" style="background:#6265fe;color:#fff"><div class="name">NEON BLUE</div><div class="hex">#6265FE</div></div>
+        <div class="swatch" style="background:#5053c8;color:#fff"><div class="name">WAVE BLUE</div><div class="hex">#5053C8</div></div>
+      </div>
+      <div class="footnote">
+        <strong>Type:</strong> Poppins (primary) + Chakra Petch (techy accents — labels, eyebrows, taglines).
+        <strong style="margin-left:14px">Tagline:</strong> CONSULT. STRATEGISE. EXECUTE.
+        <strong style="margin-left:14px">Logomark:</strong> three horizontal bars (the "Ξ" form).
+      </div>
+    </div>
+  </div>
+</body>
+</html>

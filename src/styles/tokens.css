@@ -1,0 +1,73 @@
+/* Design tokens — ported verbatim from the wireframe (docs/reference/index.html). */
+/* Use Tailwind utility classes wherever possible; these CSS variables are     */
+/* the source of truth for cases where Tailwind utilities don't cover the      */
+/* need (e.g. inline styles on third-party components).                        */
+
+:root {
+  /* ── Brand ─────────────────────────────────────────────── */
+  --nexa-purple: #9334ff;
+  --purple-hover: #7c24e0;
+  --purple-deep: #5c1ab0;
+  --purple-tint: #f4eeff;
+  --purple-soft: #e6d5ff;
+  --night-purple: #3a2e9b;
+  --dark-purple: #0f0e13;
+  --digital-white-purple: #f4eeff;
+  --soft-purple: #eceaf1;
+  --techno-purple: #c1aaff;
+  --luminous-purple: #ac77ff;
+
+  /* ── Surfaces ──────────────────────────────────────────── */
+  --bg: #fafaf7;
+  --panel: #ffffff;
+  --panel-2: #f4f2ee;
+
+  /* ── Text ──────────────────────────────────────────────── */
+  --text-1: #0f0f14;
+  --text-2: #4f4d58;
+  --text-3: #7c7986;
+  --text-4: #a8a4b1;
+
+  /* ── Borders ───────────────────────────────────────────── */
+  --border: #eceaf1;
+  --border-2: #e4e1ea;
+  --border-3: #d6d3dc;
+
+  /* ── Neutral ───────────────────────────────────────────── */
+  --white: #ffffff;
+  --off-white: #f4f2ee;
+  --light-gray: #c8c5ce;
+  --gray: #7c7986;
+
+  /* ── Status ────────────────────────────────────────────── */
+  --green: #1b9a60;
+  --green-bg: #e4f5ec;
+  --amber: #b07208;
+  --amber-bg: #fbf1dc;
+  --rose: #c8385a;
+  --rose-bg: #fae3e9;
+
+  /* ── Sidebar (dark) ────────────────────────────────────── */
+  --side-bg: #0f0e13;
+  --side-text: rgba(255, 255, 255, 0.62);
+  --side-text-hover: rgba(255, 255, 255, 0.92);
+  --side-text-active: #ffffff;
+  --side-active-bg: rgba(147, 52, 255, 0.14);
+  --side-divider: rgba(255, 255, 255, 0.06);
+
+  /* ── Section accents ───────────────────────────────────── */
+  --accent-sop: #0aaa85;
+  --accent-login: #e05a3b;
+  --accent-team: #c04868;
+  --accent-doc: #5066d0;
+  --accent-comms: #5066d0;
+  --accent-tool: #5a7888;
+  --accent-onboarding: #0aaa85;
+
+  /* ── Layout ────────────────────────────────────────────── */
+  --sidebar-width: 232px;
+  --topbar-height: 60px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+}
